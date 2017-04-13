@@ -1,0 +1,1 @@
+INSERT INTO `oc_order_status` (`order_status_id`, `language_id`, `name`) VALUES (NULL, '', 'In process');

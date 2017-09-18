@@ -1,6 +1,6 @@
 <?php
 require_once 'lib/API.php';
-class ControllerExtensionModuleNettivarasto extends Controller {
+class ControllerModuleNettivarasto extends Controller {
 	private $error = array();
 	private $merchantID = '';
 	private $secretToken = '';
@@ -20,7 +20,7 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 		$this->order_id = $order_id;
 	}
 	public function index() {
-		$this->load->language('extension/module/nettivarasto');
+		$this->load->language('module/nettivarasto');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -30,7 +30,7 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -68,10 +68,10 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 		
@@ -124,13 +124,13 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		$data['product_export_url'] = $this->url->link('extension/module/nettivarasto/export_product', 'token=' . $this->session->data['token'], true);
-		$data['latest_update_url'] = $this->url->link('extension/module/nettivarasto/get_latest_changes', 'token=' . $this->session->data['token'], true);
-		$this->response->setOutput($this->load->view('extension/module/nettivarasto', $data));
+		$data['product_export_url'] = $this->url->link('module/nettivarasto/export_product', 'token=' . $this->session->data['token'], true);
+		$data['latest_update_url'] = $this->url->link('module/nettivarasto/get_latest_changes', 'token=' . $this->session->data['token'], true);
+		$this->response->setOutput($this->load->view('module/nettivarasto.tpl', $data));
 	}
 	public function export_product(){
 	
-		$this->load->language('extension/module/nettivarasto');
+		$this->load->language('module/nettivarasto');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -199,10 +199,10 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -266,13 +266,13 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 			$data['success'] = 'Product export completed.';
 		  }
 		}
-	$data['product_export_url'] = $this->url->link('extension/module/nettivarasto/export_product', 'token=' . $this->session->data['token'], true);	
-	$data['latest_update_url'] = $this->url->link('extension/module/nettivarasto/get_latest_changes', 'token=' . $this->session->data['token'], true);
-	$this->response->setOutput($this->load->view('extension/module/nettivarasto', $data));
+	$data['product_export_url'] = $this->url->link('module/nettivarasto/export_product', 'token=' . $this->session->data['token'], true);	
+	$data['latest_update_url'] = $this->url->link('module/nettivarasto/get_latest_changes', 'token=' . $this->session->data['token'], true);
+	$this->response->setOutput($this->load->view('module/nettivarasto.tpl', $data));
 	}
 	
 	function get_latest_changes() {
-		$this->load->language('extension/module/nettivarasto');
+		$this->load->language('module/nettivarasto');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -321,10 +321,10 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -423,9 +423,9 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 			 }
 		}
 	$data['success']="Product and order data updated from Nettivarasto.";	
-	$data['product_export_url'] = $this->url->link('extension/module/nettivarasto/export_product', 'token=' . $this->session->data['token'], true);
-	$data['latest_update_url'] = $this->url->link('extension/module/nettivarasto/get_latest_changes', 'token=' . $this->session->data['token'], true);
-	$this->response->setOutput($this->load->view('extension/module/nettivarasto', $data));
+	$data['product_export_url'] = $this->url->link('module/nettivarasto/export_product', 'token=' . $this->session->data['token'], true);
+	$data['latest_update_url'] = $this->url->link('module/nettivarasto/get_latest_changes', 'token=' . $this->session->data['token'], true);
+	$this->response->setOutput($this->load->view('module/nettivarasto.tpl', $data));
 	}
 	
 	function save_order_to_nettivarasto($order_id = '') {
@@ -438,6 +438,7 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 		$this->load->model('extension/nettivarasto');
 		$order = new NettivarastoAPI_Order($this->api,$order_id);
 		$strOrderDetails	=	$this->model_sale_order->getOrder($order_id);
+	
 		$strShippingCode = trim(strstr($strOrderDetails['shipping_code'],"."),".");
 		
 		if($this->config->get("nettivarasto_status_".$strShippingCode)==1){
@@ -472,7 +473,7 @@ class ControllerExtensionModuleNettivarasto extends Controller {
 	  return $data;
 	}
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module/nettivarasto')) {
+		if (!$this->user->hasPermission('modify', 'module/nettivarasto')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

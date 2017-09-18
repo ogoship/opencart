@@ -1,6 +1,6 @@
 <?php
 require_once 'lib/API.php';
-class ControllerExtensionModuleNettivarasto extends Controller {
+class ControllerModuleNettivarasto extends Controller {
 	private $error = array();
 	private $merchantID = '';
 	private $secretToken = '';

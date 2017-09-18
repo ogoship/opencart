@@ -3,8 +3,8 @@
 	<name>Nettivarasto-api</name>
 	<code>nettivarasto-api</code>
 	<version>1.0</version>
-	<author>Nawas</author>
-	<link>http://wezantechnologies.com</link>
+	<author>Koivua Oy</author>
+	<link>https://ogoship.com/</link>
 		<file path="admin/controller/sale/order.php">
 		<operation>
             <search trim="true"><![CDATA[public function getForm() {]]></search>
@@ -16,7 +16,7 @@
             <search trim="true"><![CDATA[public function getForm() {]]></search>
             <add position="after"><![CDATA[ 
 					if(isset($this->request->get['send_nettivarasto']) && $this->request->get['send_nettivarasto']=="true"){
-						$strResponse =	$this->load->controller('extension/module/nettivarasto/save_order_to_nettivarasto');	
+						$strResponse =	$this->load->controller('module/nettivarasto/save_order_to_nettivarasto');	
 						if(isset($strResponse['error_warning'])){
 							$data['error_warning'] = $strResponse['error_warning'];
 						}elseif(isset($strResponse['success'])){
@@ -54,7 +54,7 @@
 					$this->load->model('checkout/order');
 					$strOrderDetails	=	$this->model_checkout_order->getOrder($this->session->data['order_id']);
 					if($strOrderDetails['order_status_id']=="5"){
-						$strResponse = $this->load->controller('extension/module/nettivarasto/save_order_to_nettivarasto');
+						$strResponse = $this->load->controller('module/nettivarasto/save_order_to_nettivarasto');
 					}
 				}
 					]]></add>

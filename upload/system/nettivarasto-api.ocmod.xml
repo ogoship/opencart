@@ -2,7 +2,7 @@
 <modification>
 	<name>Nettivarasto-api</name>
 	<code>nettivarasto-api</code>
-	<version>1.1</version>
+	<version>1.2</version>
 	<author>Koivua Oy</author>
 	<link>https://ogoship.com/</link>
 		<file path="admin/controller/sale/order.php">
@@ -10,20 +10,20 @@
             <search trim="true"><![CDATA[public function getForm() {]]></search>
             <add position="after"><![CDATA[ 
 				$data['send_url']=$this->url->link('sale/order/edit', 'token=' . $this->session->data['token'].'&send_nettivarasto=true&order_id='.$this->request->get['order_id'], true);	
-					]]></add>
+			]]></add>
         </operation>
 		<operation>
             <search trim="true"><![CDATA[public function getForm() {]]></search>
             <add position="after"><![CDATA[ 
-					if(isset($this->request->get['send_nettivarasto']) && $this->request->get['send_nettivarasto']=="true"){
-						$strResponse =	$this->load->controller('module/nettivarasto/save_order_to_nettivarasto');	
-						if(isset($strResponse['error_warning'])){
-							$data['error_warning'] = $strResponse['error_warning'];
-						}elseif(isset($strResponse['success'])){
-							$data['success'] = $strResponse['success'];
-						}
-					}	
-					]]></add>
+				if(isset($this->request->get['send_nettivarasto']) && $this->request->get['send_nettivarasto']=="true"){
+					$strResponse =	$this->load->controller('extension/module/nettivarasto/save_order_to_nettivarasto');	
+					if(isset($strResponse['error_warning'])){
+						$data['error_warning'] = $strResponse['error_warning'];
+					}elseif(isset($strResponse['success'])){
+						$data['success'] = $strResponse['success'];
+					}
+				}	
+			]]></add>
         </operation>
 		</file>
 		<file path="admin/view/template/sale/order_form.tpl">
@@ -41,9 +41,9 @@
 					</div>
 					<?php } ?>	
 				<div class="text-right">
-                <a href="<?php echo $send_url; ?>">Send Order to Nettivarasto</a>
-              </div>	
-					]]></add>
+					<a href="<?php echo $send_url; ?>">Send Order to Nettivarasto</a>
+				</div>	
+			]]></add>
         </operation>
 		</file>
 		<file path="catalog/controller/checkout/success.php">
@@ -54,10 +54,10 @@
 					$this->load->model('checkout/order');
 					$strOrderDetails	=	$this->model_checkout_order->getOrder($this->session->data['order_id']);
 					if($strOrderDetails['order_status_id']=="5"){
-						$strResponse = $this->load->controller('module/nettivarasto/save_order_to_nettivarasto');
+						$strResponse = $this->load->controller('extension/module/nettivarasto/save_order_to_nettivarasto');
 					}
 				}
-					]]></add>
+			]]></add>
         </operation>
 		</file>
-</modification>		
+</modification>

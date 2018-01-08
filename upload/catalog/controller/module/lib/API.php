@@ -43,7 +43,8 @@ class NettivarastoAPI
   }
 
   function updateAllProducts($products) {
-    $restClient = new NettivarastoAPI_RESTclient($this, 'POST', '/Products', '');
+  	$strParameters = array("product","all");
+    $restClient = new NettivarastoAPI_RESTclient($this, 'POST', '/Products', $strParameters);
     $restClient->setPostData($products);
     $resultArray = array();
     $success = $restClient->execute($resultArray);
@@ -59,7 +60,7 @@ class NettivarastoAPI
   
   function latestChanges(&$products, &$orders)
   {
-    $restClient = new NettivarastoAPI_RESTclient($this, 'GET', '/LatestChanges', array('changes', $this->timestamp));
+      $restClient = new NettivarastoAPI_RESTclient($this, 'GET', '/LatestChanges', array('order','latestchanges', $this->timestamp));
     $restClient->addGetParameter('TimeStamp', $this->timestamp);
     $resultArray = array();
     $success = $restClient->execute($resultArray);
@@ -169,7 +170,6 @@ class NettivarastoAPI
   function getSHA1($parameters)
   {
     /// \todo REMOVE
-    return 'Dem0';
     
     return sha1(implode(',', $parameters) . ',' . $this->secretToken);
   }

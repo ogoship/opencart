@@ -498,16 +498,16 @@ class ControllerModuleNettivarasto extends Controller {
 				//order for options			
 				$sku = $this->model_extension_nettivarasto->getSKUByProductId($item['product_id']);
 
-				$order_product_id = $this->model_extension_nettivarasto->getOrderProductIdByOrderId($strOrderDetails['order_id']);
+				//$order_product_id = $this->model_extension_nettivarasto->getOrderProductIdByOrderId($strOrderDetails['order_id']);
+				$order_product_id = $item['order_product_id'];
+				$orderOptions = $this->model_extension_nettivarasto->getOrderOptionsByOrderId($strOrderDetails['order_id'], $order_product_id);
 				
-				$orderOptions = $this->model_extension_nettivarasto->getOrderOptionsByOrderId($strOrderDetails['order_id'], $order_product_id[0]['order_product_id']);
-				
-				if(isset($orderOptions)) {
+				if(isset($orderOptions) && isset($orderOptions[0]) && isset($orderOptions[0]['value'])) {
 					$optionSku = $sku.'-'.$orderOptions[0]['value'];
 
 					$order->setOrderLineCode( $index, $optionSku);
 				} else {
-					$order->setOrderLineCode( $index, ($this->model_extension_nettivarasto->getSKUByProductId($item['product_id'])) );
+					$order->setOrderLineCode( $index, $sku );
 				}			
 				$order->setOrderLineQuantity( $index, ($item['quantity']));
 				$index++;

@@ -9,7 +9,9 @@
 		<operation>
             <search trim="true"><![CDATA[public function getForm() {]]></search>
             <add position="after"><![CDATA[ 
+				if(isset($this->request->get['order_id'])){
 				$data['send_url']=$this->url->link('sale/order/edit', 'token=' . $this->session->data['token'].'&send_nettivarasto=true&order_id='.$this->request->get['order_id'], true);	
+				}
 			]]></add>
         </operation>
 		<operation>

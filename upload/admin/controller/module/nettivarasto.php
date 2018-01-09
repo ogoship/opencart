@@ -31,7 +31,7 @@ class ControllerModuleNettivarasto extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -510,6 +510,7 @@ class ControllerModuleNettivarasto extends Controller {
 					$order->setOrderLineCode( $index, $sku );
 				}			
 				$order->setOrderLineQuantity( $index, ($item['quantity']));
+				$order->setOrderLinePrice( $index, $item['price']);
 				$index++;
 			}
 			  

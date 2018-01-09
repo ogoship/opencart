@@ -12,12 +12,12 @@ class ModelExtensionNettivarasto extends Model {
 	}
 	
 	public function getProductBySKU($sku) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE sku='".$sku."'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE sku='" . $this->db->escape($sku) . "'");
 		return $query->row;
 	}
 	
-	public function getSKUByProductId($sku) {
-		$query = $this->db->query("SELECT sku FROM " . DB_PREFIX . "product WHERE product_id='".$sku."'");
+	public function getSKUByProductId($product_id) {
+		$query = $this->db->query("SELECT sku FROM " . DB_PREFIX . "product WHERE product_id='" . (int)$product_id . "'");
 		return $query->row['sku'];
 	}
 	

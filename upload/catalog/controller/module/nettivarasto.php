@@ -30,14 +30,23 @@ class ControllerModuleNettivarasto extends Controller {
 		$strShippingCode = trim(strstr($strOrderDetails['shipping_code'],"."),".");
 		
 		if($this->config->get("nettivarasto_status_".$strShippingCode)==1){
-				$nettivarasto_shipping_method=$this->config->get("nettivarasto_code_".$strShippingCode);
-				$products	=	$this->model_account_order->getOrderProducts($order_id);
-				$index=0;
-				foreach($products as $item) {
-				  $order->setOrderLineCode( $index, ($this->model_extension_nettivarasto->getSKUByProductId($item['product_id'])) );
-				  $order->setOrderLineQuantity( $index, ($item['quantity']));
-				  $index++;
-				}
+			$nettivarasto_shipping_method=$this->config->get("nettivarasto_code_".$strShippingCode);
+			$products	=	$this->model_account_order->getOrderProducts($order_id);
+			$index=0;
+			foreach($products as $item) {
+				$sku = $this->model_extension_nettivarasto->getSKUByProductId($item['product_id']);
+				$order_product_id = $item['order_product_id'];
+				$orderOptions = $this->model_extension_nettivarasto->getOrderOptionsByOrderId($strOrderDetails['order_id'], $order_product_id);
+				if(isset($orderOptions) && isset($orderOptions[0]) && isset($orderOptions[0]['value'])) {
+					$optionSku = $sku.'-'.$orderOptions[0]['value'];
+					$order->setOrderLineCode( $index, $optionSku);
+				} else {
+					$order->setOrderLineCode( $index, $sku );
+				}			
+				$order->setOrderLineQuantity( $index, ($item['quantity']));
+				$order->setOrderLinePrice( $index, $item['price']);
+				$index++;
+			}
 			  
 			  $order->setPriceTotal($strOrderDetails['total']);
 			  $order->setCustomerName($strOrderDetails['shipping_firstname'].' '.$strOrderDetails['shipping_lastname']);
@@ -111,10 +120,10 @@ class ControllerModuleNettivarasto extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/nettivarasto', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('module/nettivarasto', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -218,7 +227,7 @@ class ControllerModuleNettivarasto extends Controller {
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module/nettivarasto')) {
+		if (!$this->user->hasPermission('modify', 'module/nettivarasto')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

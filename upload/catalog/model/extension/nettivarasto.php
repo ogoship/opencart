@@ -10,11 +10,11 @@ class ModelExtensionNettivarasto extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "order SET order_status_id = '" . (int)$order_status_id . "' WHERE order_id='" . (int)$order_id . "'");
 	}
 	public function getProductBySKU($sku) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE sku='".$sku."'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE sku='".$this->db->escape($sku)."'");
 		return $query->row;
 	}
-	public function getSKUByProductId($sku) {
-		$query = $this->db->query("SELECT sku FROM " . DB_PREFIX . "product WHERE product_id='".$sku."'");
+	public function getSKUByProductId($product_id) {
+		$query = $this->db->query("SELECT sku FROM " . DB_PREFIX . "product WHERE product_id='". (int)$product_id ."'");
 		return $query->row['sku'];
 	}
 	public function updateProductQuantity($product_id, $quantity) {
@@ -23,4 +23,11 @@ class ModelExtensionNettivarasto extends Model {
 	public function updateProductStockStatus($product_id, $stock) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET stock_status_id = '" . (int)$stock . "' WHERE product_id='" . (int)$product_id . "'");
 	}
+	public function getOrderOptionsByOrderId($order_id, $order_product_id) {
+		$sql = "SELECT value FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'";
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
 }
